@@ -2,7 +2,6 @@ import "./App.scss";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, { Suspense } from "react";
 import Loader from "./Components/Misc/Loader/Loader";
-import StoreContext from "./Context/Store";
 import StoreProvider from "./Context/Store";
 function App() {
   const Home = React.lazy(() => import("./Screens/Home/Home"));
