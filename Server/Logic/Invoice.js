@@ -26,7 +26,41 @@ export const createRandomInvoice = (data, user) => {
         date: data.date,
         company: data.company,
         client: user.name,
-        clientId: ObjectId(data._id),
+        clientId: user._id,
+        total,
+      };
+
+      resolve(invoice);
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+export const createinvoice = (data, user) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await getinvoiceCount();
+      let items = [];
+      let total = 0;
+      data.items.forEach((element) => {
+        items.push({
+          name: element.item,
+          quantity: element.quantity,
+          unit: element.unit,
+          price: element.price,
+          total:element.price*element.quantity
+        });
+        total=total+(element.price*element.quantity)
+      });
+
+      let invoice = {
+        number: await numberGenerator(count),
+        items,
+        currency: data.currency,
+        date: data.date,
+        company: data.company,
+        client: user.name,
+        clientId: user._id,
         total,
       };
 

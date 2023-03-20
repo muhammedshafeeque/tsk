@@ -23,7 +23,7 @@ export const getAllinvoices = (query, user) => {
     try {
       let kewords = {};
       query.number && (kewords.number = query.number);
-      query.clientId = ObjectId(user._id);
+      kewords.clientId = user._id;
       let invoices = await db()
         .collection(collections.INVOICE_COLLECTION)
         .find(kewords)
