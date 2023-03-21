@@ -21,16 +21,25 @@ export const insertInvoice = (data) => {
 export const getAllinvoices = (query, user) => {
   return new Promise(async (resolve, reject) => {
     try {
-      let kewords = {};
-      query.number && (kewords.number = query.number);
-      kewords.clientId = user._id;
+      let keywords = {};
+      query.number && (keywords.number = query.number);
+      keywords.clientId = user._id;
+      query.status && (keywords.status = "pending");
       let invoices = await db()
         .collection(collections.INVOICE_COLLECTION)
-        .find(kewords)
+        .find(keywords)
         .toArray();
       resolve(invoices);
     } catch (error) {
       reject(error);
     }
+  });
+};
+export const getInvoiceById = (id, user) => {
+  return new Promise(async (resolve, reject) => {
+    let invoice = await db()
+      .collection(collections.INVOICE_COLLECTION)
+      .findOne({ _id: ObjectId(id), clientId: user._id });
+    resolve(invoice);
   });
 };

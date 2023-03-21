@@ -10,7 +10,7 @@ export const generateinvoice = {
 export const createteInvoice = {
   body: Joi.object().keys({
     company: Joi.string().required(),
-    currency: Joi.string().required(),
+    currency: Joi.string(),
     date: Joi.string().required(),
     items: Joi.array()
       .required()

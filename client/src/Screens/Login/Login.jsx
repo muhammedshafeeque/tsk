@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   Container,
@@ -13,7 +13,16 @@ import {
 import SignIn from "../../Components/Auth/SignIn/SignIn";
 import SignUp from "../../Components/Auth/Signup/SignUp";
 import './Login.scss'
+import { Store } from "../../Context/Store";
+import { useNavigate } from "react-router-dom";
 function Login() {
+  const {user}=Store()
+  const navigate=useNavigate()
+  useEffect(()=>{
+    if(user){
+      navigate('/home')
+    }
+  },[user,navigate])
   return (
     <div>
       <Container max='xxl' centerContent>

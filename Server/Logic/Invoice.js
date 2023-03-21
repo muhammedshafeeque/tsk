@@ -13,6 +13,7 @@ export const createRandomInvoice = (data, user) => {
           name: `Item${i + 1}`,
           quantity: await randomNumberGenerate(10),
           price: await randomNumberGenerate(),
+          
         };
         item.total = item.quantity * item.price;
         total = total + item.total;
@@ -22,12 +23,12 @@ export const createRandomInvoice = (data, user) => {
       let invoice = {
         number: await numberGenerator(count),
         items,
-        currency: data.currency,
         date: data.date,
         company: data.company,
         client: user.name,
         clientId: user._id,
         total,
+        status:'pending'
       };
 
       resolve(invoice);
@@ -48,15 +49,16 @@ export const createinvoice = (data, user) => {
           quantity: element.quantity,
           unit: element.unit,
           price: element.price,
-          total:element.price*element.quantity
+          total: element.price * element.quantity,
+          
         });
-        total=total+(element.price*element.quantity)
+        total = total + element.price * element.quantity;
       });
 
       let invoice = {
         number: await numberGenerator(count),
         items,
-        currency: data.currency,
+        status:'pending',
         date: data.date,
         company: data.company,
         client: user.name,

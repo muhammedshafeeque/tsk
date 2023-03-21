@@ -1,4 +1,5 @@
 import {
+  Button,
   Table,
   TableContainer,
   Tbody,
@@ -13,20 +14,26 @@ import "./Home.scss";
 import axios from '../../Api/Axios'
 import { Store } from "../../Context/Store";
 import CreateInvoice from "../../Components/Invoice/CreateInvoice/CreateInvoice";
+import { useNavigate } from "react-router-dom";
 function Home() {
   const {config}=Store()
   const [invoices,setInvoices]=useState([])
+  const [reload,setReload]=useState('')
+  const navigte=useNavigate()
   useEffect(()=>{
-    axios.get('invoice/',config).then((res)=>{
+    axios.get('invoice/?status=pending',config).then((res)=>{
       setInvoices(res.data)
     })
-  },[config])
+  },[config,reload])
+  const handleView=(id)=>{
+    navigte(`/view-invoice/${id}`)
+  }
   return (
     <div>
       <Header />
       <div className="home_body">
         <div className="menu_area">
-          <CreateInvoice/>
+          <CreateInvoice setReload={setReload}/>
         </div>
         <div className="home_body">
           <h2 className="thead">Invoices</h2>
@@ -47,7 +54,10 @@ function Home() {
                   <Td>{inv.company}</Td>
                   <Td>{inv.number}</Td>
                   <Td>{inv.date}</Td>
-                  <Td isNumeric>{inv.total} {inv.currency}</Td>
+                  <Td isNumeric>{inv.total} <span>&#8377;</span></Td>
+                  <Td><Button  onClick={()=>{
+                    handleView(inv._id)
+                  }} colorScheme={'blue'}>View</Button></Td>
                 </Tr>
                 })}
                 

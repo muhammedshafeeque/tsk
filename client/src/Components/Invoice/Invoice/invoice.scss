@@ -1,0 +1,16 @@
+.invoiceBody{
+    background-color: white;
+    border-radius: 5px;
+    padding: 15px;
+    width: 100%;
+}
+.head_area{
+    margin-top: 3rem;
+}
+.invoice_table{
+    width: 100%;
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+      }
+}

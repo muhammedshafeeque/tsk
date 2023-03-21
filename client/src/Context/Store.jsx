@@ -21,7 +21,6 @@ const StoreProvider = ({ children }) => {
           navigate("/");
         } else {
           setUser(res.data);
-          navigate("/home");
         }
       });
     }
