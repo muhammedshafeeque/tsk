@@ -10,7 +10,7 @@ function Header() {
   };
   return (
     <div className="header">
-      <Text className="Header_text">Shopping mania</Text>
+      <Text className="Header_text" onClick={()=>{navigate('/home')}}>Shopping mania</Text>
       <p onClick={handleLogout}>Logout</p>
     </div>
   );
