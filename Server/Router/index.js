@@ -8,5 +8,5 @@ const router = express.Router();
 router.use("/auth", AuthRouter);
 router.use('/user',verifyUser,UserRouter)
 router.use('/invoice',verifyUser,InvoiceRouter)
-router.use('/pay',verifyUser,PaymentRouter)
+router.use('/pay',PaymentRouter)
 export default router;

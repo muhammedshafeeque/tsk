@@ -28,3 +28,6 @@ export const doPayment = (inv, user) => {
     }
   });
 };
+export const insertPaymentOption=()=>{
+  
+}
