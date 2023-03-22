@@ -53,6 +53,9 @@ function Invoice({ data }) {
         <Text mt={5}>Total : </Text>
         <Text mt={5} ml={3}> {data.total} <span>&#8377;</span></Text>
       </Box>
+      {
+        (data.status==='payed')&&<Text  textAlign={"center"} fontSize={'30px'} color={'green'}>Payed {data.total} <span>&#8377;</span></Text>
+      }
     </Box>
   );
 }

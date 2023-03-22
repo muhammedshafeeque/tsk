@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Header from "../../Components/Misc/Header/Header";
 import axios from "../../Api/Axios";
 import { Store } from "../../Context/Store";
-import { Box, Button, useToast } from "@chakra-ui/react";
+import { Box, Button, Text, useToast } from "@chakra-ui/react";
 import "./viewinvoice.scss";
 import Invoice from "../../Components/Invoice/Invoice/Invoice";
 
@@ -57,6 +57,8 @@ function ViewInvoice() {
         Pay {invoice.total} <span>&#8377;</span>
       </Button>
       }
+
+
         
       </Box>}
       

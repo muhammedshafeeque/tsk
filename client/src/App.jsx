@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React, { Suspense } from "react";
 import Loader from "./Components/Misc/Loader/Loader";
 import StoreProvider from "./Context/Store";
-import PaymentSuccess from "./Screens/PaymentSucess/PaymentSuccess";
+
 function App() {
   const Home = React.lazy(() => import("./Screens/Home/Home"));
   const Login = React.lazy(() => import("./Screens/Login/Login"));
@@ -18,7 +18,7 @@ function App() {
             <Route path="/" element={<Login />} exact />
             <Route path="/Home" element={<Home />} />
             <Route path="/view-invoice/:id"  element={<ViewInvoice  />} />
-            <Route path="/success/:id" element={<PaymentSuccess/>}/>
+            
           </Routes>
         </Suspense>
         </StoreProvider>

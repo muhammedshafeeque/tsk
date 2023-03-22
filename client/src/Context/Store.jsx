@@ -18,6 +18,7 @@ const StoreProvider = ({ children }) => {
       axios.get("user/req-user", configs).then((res) => {
         if (res.data.error) {
           localStorage.removeItem("token");
+          setUser(null)
           navigate("/");
         } else {
           setUser(res.data);
@@ -33,8 +34,11 @@ const StoreProvider = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       });
+    }else{
+      setUser(null)
+      navigate("/");
     }
-  }, [user]);
+  }, [user,navigate]);
   return (
     <StoreContext.Provider value={{ user, setUser, config, setConfig }}>
       {children}

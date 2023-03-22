@@ -24,7 +24,7 @@ export const getAllinvoices = (query, user) => {
       let keywords = {};
       query.number && (keywords.number = query.number);
       keywords.clientId = user._id;
-      query.status && (keywords.status = "pending");
+      query.status && (keywords.status = query.status);
       let invoices = await db()
         .collection(collections.INVOICE_COLLECTION)
         .find(keywords)
@@ -40,6 +40,21 @@ export const getInvoiceById = (id, user) => {
     let invoice = await db()
       .collection(collections.INVOICE_COLLECTION)
       .findOne({ _id: ObjectId(id), clientId: user._id });
+    resolve(invoice);
+  });
+};
+export const updateInvoiceStatus = (id) => {
+  return new Promise(async (resolve, reject) => {
+    let invoice = await db()
+      .collection(collections.INVOICE_COLLECTION)
+      .updateOne(
+        { _id: ObjectId(id) },
+        {
+          $set: {
+            status: "payed",
+          },
+        }
+      );
     resolve(invoice);
   });
 };

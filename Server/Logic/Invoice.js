@@ -65,8 +65,12 @@ export const createinvoice = (data, user) => {
         clientId: user._id,
         total,
       };
+      if(total>20000){
+        reject('Maximum Amount Limit Is 20000')
+      }else{
+        resolve(invoice);
+      }
 
-      resolve(invoice);
     } catch (error) {
       reject(error);
     }

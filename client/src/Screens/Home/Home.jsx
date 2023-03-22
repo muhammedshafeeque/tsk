@@ -1,69 +1,56 @@
 import {
-  Button,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import Header from "../../Components/Misc/Header/Header";
 import "./Home.scss";
-import axios from '../../Api/Axios'
+import axios from "../../Api/Axios";
 import { Store } from "../../Context/Store";
 import CreateInvoice from "../../Components/Invoice/CreateInvoice/CreateInvoice";
-import { useNavigate } from "react-router-dom";
+import InvoiceTable from "../../Components/Invoice/InvoiceTable/InvoiceTable";
 function Home() {
-  const {config}=Store()
-  const [invoices,setInvoices]=useState([])
-  const [reload,setReload]=useState('')
-  const navigte=useNavigate()
-  useEffect(()=>{
-    axios.get('invoice/?status=pending',config).then((res)=>{
-      setInvoices(res.data)
-    })
-  },[config,reload])
-  const handleView=(id)=>{
-    navigte(`/view-invoice/${id}`)
-  }
+  const { config } = Store();
+  const [invoices, setInvoices] = useState([]);
+  const [reload, setReload] = useState("");
+  const [status,setStatus]=useState('pending')
+  useEffect(() => {
+    axios.get(`invoice/?status=${status}`, config).then((res) => {
+      setInvoices(res.data);
+    });
+
+  }, [status,reload,config]);
+  
   return (
-    <div>
+    <div> 
       <Header />
-      <div className="home_body">
+      <div className="home_body"> 
         <div className="menu_area">
-          <CreateInvoice setReload={setReload}/>
+          <CreateInvoice setReload={setReload} />
         </div>
-        <div className="home_body">
-          <h2 className="thead">Invoices</h2>
-          <TableContainer>
-            <Table variant="simple">
-              <Thead>
-                <Tr>
-                  <Th>Company</Th>
-                  <Th>Invoice Number</Th>
-                  <Th>Date</Th>
-                  <Th isNumeric>Total</Th>
-                  <Th>Pay</Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {invoices.map((inv)=>{
-                  return <Tr key={inv._id}>
-                  <Td>{inv.company}</Td>
-                  <Td>{inv.number}</Td>
-                  <Td>{inv.date}</Td>
-                  <Td isNumeric>{inv.total} <span>&#8377;</span></Td>
-                  <Td><Button  onClick={()=>{
-                    handleView(inv._id)
-                  }} colorScheme={'blue'}>View</Button></Td>
-                </Tr>
-                })}
-                
-              </Tbody>
-            </Table>
-          </TableContainer>
+        <div className="home_body_table_area">
+          <Tabs variant="soft-rounded" colorScheme="green">
+            <TabList>
+              <Tab onClick={()=>{setStatus('pending')}}>Pending Invoices</Tab>
+              <Tab onClick={()=>{setStatus('payed')}}>Payment Compleated Invoices</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+              <h2 className="thead">Pending Invoices</h2>
+              <InvoiceTable data={invoices}/>
+              </TabPanel>
+              <TabPanel>
+              <h2 className="thead">Payed Invoices</h2>
+              <InvoiceTable data={invoices}/>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+          
+          
         </div>
       </div>
     </div>
